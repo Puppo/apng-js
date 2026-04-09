@@ -15,6 +15,8 @@
   "types": "types/library/parser.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
+    "test": "vitest run",
+    "pretest": "yarn build",
     "prepublish": "yarn build"
   },
   "author": {
@@ -42,7 +44,8 @@
     "postcss": "^8.5.9",
     "rollup": "^4.60.1",
     "rollup-plugin-postcss": "^4.0.2",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "vitest": "^2.1.9"
   },
   "dependencies": {}
 }
