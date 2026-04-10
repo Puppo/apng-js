@@ -38,6 +38,17 @@ export default [
     },
     plugins: libraryPlugins,
   },
+  // Library – UMD (browser <script> tag / AMD / CommonJS fallback)
+  {
+    input: 'src/library/parser.js',
+    output: {
+      file: pkg.browser,
+      format: 'umd',
+      name: 'apngJS',
+      exports: 'named',
+    },
+    plugins: libraryPlugins,
+  },
   // Demo page – IIFE bundle for GitHub Pages (docs/)
   {
     input: 'src/demo-page/index.js',
