@@ -65,19 +65,19 @@ export default class extends EventEmitter {
             }
         }
 
-        if (this._prevFrame && this._prevFrame.disposeOp == 1) {
+        if (this._prevFrame && this._prevFrame.disposeOp === 1) {
             this.context.clearRect(this._prevFrame.left, this._prevFrame.top, this._prevFrame.width, this._prevFrame.height);
-        } else if (this._prevFrame && this._prevFrame.disposeOp == 2) {
+        } else if (this._prevFrame && this._prevFrame.disposeOp === 2) {
             this.context.putImageData(this._prevFrameData, this._prevFrame.left, this._prevFrame.top);
         }
 
         const frame = this.currentFrame;
         this._prevFrame = frame;
         this._prevFrameData = null;
-        if (frame.disposeOp == 2) {
+        if (frame.disposeOp === 2) {
             this._prevFrameData = this.context.getImageData(frame.left, frame.top, frame.width, frame.height);
         }
-        if (frame.blendOp == 0) {
+        if (frame.blendOp === 0) {
             this.context.clearRect(frame.left, frame.top, frame.width, frame.height);
         }
 

@@ -32,11 +32,11 @@ export default function parseAPNG(buffer) {
     const
         preDataParts = [],
         postDataParts = [];
+    const apng = new APNG();
     let
         headerDataBytes = null,
         frame = null,
-        frameNumber = 0,
-        apng = new APNG();
+        frameNumber = 0;
 
     eachChunk(bytes, (type, bytes, off, length) => {
         const dv = new DataView(bytes.buffer);
@@ -59,8 +59,8 @@ export default function parseAPNG(buffer) {
                 frame.height = dv.getUint32(off + 8 + 8);
                 frame.left = dv.getUint32(off + 8 + 12);
                 frame.top = dv.getUint32(off + 8 + 16);
-                var delayN = dv.getUint16(off + 8 + 20);
-                var delayD = dv.getUint16(off + 8 + 22);
+                const delayN = dv.getUint16(off + 8 + 20);
+                let delayD = dv.getUint16(off + 8 + 22);
                 if (delayD === 0) {
                     delayD = 100;
                 }
@@ -101,7 +101,7 @@ export default function parseAPNG(buffer) {
         apng.frames.push(frame);
     }
 
-    if (apng.frames.length == 0) {
+    if (apng.frames.length === 0) {
         return errNotAPNG;
     }
 
@@ -109,7 +109,7 @@ export default function parseAPNG(buffer) {
         postBlob = new Blob(postDataParts);
 
     apng.frames.forEach(frame => {
-        var bb = [];
+        let bb = [];
         bb.push(PNGSignature);
         headerDataBytes.set(makeDWordArray(frame.width), 0);
         headerDataBytes.set(makeDWordArray(frame.height), 4);
@@ -137,7 +137,7 @@ function eachChunk(bytes, callback) {
         type = readString(bytes, off + 4, 4);
         res = callback(type, bytes, off, length);
         off += 12 + length;
-    } while (res !== false && type != 'IEND' && off < bytes.length);
+    } while (res !== false && type !== 'IEND' && off < bytes.length);
 }
 
 /**
@@ -183,7 +183,7 @@ function subBuffer(bytes, start, length) {
  * @param {Uint8Array} dataBytes
  * @return {Uint8Array}
  */
-var makeChunkBytes = function (type, dataBytes) {
+const makeChunkBytes = function (type, dataBytes) {
     const crcLen = type.length + dataBytes.length;
     const bytes = new Uint8Array(crcLen + 8);
     const dv = new DataView(bytes.buffer);
@@ -191,11 +191,11 @@ var makeChunkBytes = function (type, dataBytes) {
     dv.setUint32(0, dataBytes.length);
     bytes.set(makeStringArray(type), 4);
     bytes.set(dataBytes, 8);
-    var crc = crc32(bytes, 4, crcLen);
+    const crc = crc32(bytes, 4, crcLen);
     dv.setUint32(crcLen + 4, crc);
     return bytes;
 };
 
-var makeDWordArray = function (x) {
+const makeDWordArray = function (x) {
     return new Uint8Array([(x >>> 24) & 0xff, (x >>> 16) & 0xff, (x >>> 8) & 0xff, x & 0xff]);
 };

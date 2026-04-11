@@ -16,6 +16,7 @@
   "types": "types/library/parser.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
+    "lint": "eslint .",
     "test": "vitest run",
     "pretest": "yarn build",
     "prepublish": "yarn build"
@@ -33,11 +34,13 @@
     "@rollup/plugin-babel": "^7.0.0",
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
+    "eslint": "^10",
     "events": "^3.3.0",
+    "globals": "^17.4.0",
     "postcss": "^8.5.9",
     "rollup": "^4.60.1",
     "rollup-plugin-postcss": "^4.0.2",
-    "vitest": "^2.1.9"
+    "vitest": "^4.1.4"
   },
   "dependencies": {}
 }

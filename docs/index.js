@@ -500,18 +500,18 @@
           this._paused = true;
         }
       }
-      if (this._prevFrame && this._prevFrame.disposeOp == 1) {
+      if (this._prevFrame && this._prevFrame.disposeOp === 1) {
         this.context.clearRect(this._prevFrame.left, this._prevFrame.top, this._prevFrame.width, this._prevFrame.height);
-      } else if (this._prevFrame && this._prevFrame.disposeOp == 2) {
+      } else if (this._prevFrame && this._prevFrame.disposeOp === 2) {
         this.context.putImageData(this._prevFrameData, this._prevFrame.left, this._prevFrame.top);
       }
       const frame = this.currentFrame;
       this._prevFrame = frame;
       this._prevFrameData = null;
-      if (frame.disposeOp == 2) {
+      if (frame.disposeOp === 2) {
         this._prevFrameData = this.context.getImageData(frame.left, frame.top, frame.width, frame.height);
       }
-      if (frame.blendOp == 0) {
+      if (frame.blendOp === 0) {
         this.context.clearRect(frame.left, frame.top, frame.width, frame.height);
       }
       this.context.drawImage(frame.imageElement, frame.left, frame.top);
@@ -687,10 +687,10 @@
     }
     const preDataParts = [],
       postDataParts = [];
+    const apng = new APNG();
     let headerDataBytes = null,
       frame = null,
-      frameNumber = 0,
-      apng = new APNG();
+      frameNumber = 0;
     eachChunk(bytes, (type, bytes, off, length) => {
       const dv = new DataView(bytes.buffer);
       switch (type) {
@@ -712,8 +712,8 @@
           frame.height = dv.getUint32(off + 8 + 8);
           frame.left = dv.getUint32(off + 8 + 12);
           frame.top = dv.getUint32(off + 8 + 16);
-          var delayN = dv.getUint16(off + 8 + 20);
-          var delayD = dv.getUint16(off + 8 + 22);
+          const delayN = dv.getUint16(off + 8 + 20);
+          let delayD = dv.getUint16(off + 8 + 22);
           if (delayD === 0) {
             delayD = 100;
           }
@@ -752,13 +752,13 @@
     if (frame) {
       apng.frames.push(frame);
     }
-    if (apng.frames.length == 0) {
+    if (apng.frames.length === 0) {
       return errNotAPNG;
     }
     const preBlob = new Blob(preDataParts),
       postBlob = new Blob(postDataParts);
     apng.frames.forEach(frame => {
-      var bb = [];
+      let bb = [];
       bb.push(PNGSignature);
       headerDataBytes.set(makeDWordArray(frame.width), 0);
       headerDataBytes.set(makeDWordArray(frame.height), 4);
@@ -790,7 +790,7 @@
       type = readString(bytes, off + 4, 4);
       res = callback(type, bytes, off, length);
       off += 12 + length;
-    } while (res !== false && type != 'IEND' && off < bytes.length);
+    } while (res !== false && type !== 'IEND' && off < bytes.length);
   }
 
   /**
@@ -835,18 +835,18 @@
    * @param {Uint8Array} dataBytes
    * @return {Uint8Array}
    */
-  var makeChunkBytes = function (type, dataBytes) {
+  const makeChunkBytes = function (type, dataBytes) {
     const crcLen = type.length + dataBytes.length;
     const bytes = new Uint8Array(crcLen + 8);
     const dv = new DataView(bytes.buffer);
     dv.setUint32(0, dataBytes.length);
     bytes.set(makeStringArray(type), 4);
     bytes.set(dataBytes, 8);
-    var crc = crc32(bytes, 4, crcLen);
+    const crc = crc32(bytes, 4, crcLen);
     dv.setUint32(crcLen + 4, crc);
     return bytes;
   };
-  var makeDWordArray = function (x) {
+  const makeDWordArray = function (x) {
     return new Uint8Array([x >>> 24 & 0xff, x >>> 16 & 0xff, x >>> 8 & 0xff, x & 0xff]);
   };
 
