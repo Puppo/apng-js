@@ -1,7 +1,6 @@
 .*
 !.npmignore
 !.gitignore
-!.babelrc
-!.eslintrc.json
+!.github
 node_modules
 lib/
