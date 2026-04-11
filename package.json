@@ -6,7 +6,6 @@
   "repository": "davidmz/apng-js",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
-  "browser": "lib/index.umd.js",
   "exports": {
     ".": {
       "import": "./lib/index.esm.js",
@@ -34,19 +33,10 @@
     "@rollup/plugin-babel": "^7.0.0",
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
-    "@typescript-eslint/eslint-plugin": "~2.27.0",
-    "@typescript-eslint/parser": "~2.27.0",
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-standard": "^4.0.0",
     "events": "^3.3.0",
     "postcss": "^8.5.9",
     "rollup": "^4.60.1",
     "rollup-plugin-postcss": "^4.0.2",
-    "typescript": "~3.8.3",
     "vitest": "^2.1.9"
   },
   "dependencies": {}
