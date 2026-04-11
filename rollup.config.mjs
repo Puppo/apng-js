@@ -42,7 +42,7 @@ export default [
   {
     input: 'src/library/parser.js',
     output: {
-      file: pkg.browser,
+      file: 'lib/index.umd.js',
       format: 'umd',
       name: 'apngJS',
       exports: 'named',
